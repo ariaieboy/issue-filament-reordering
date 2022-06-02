@@ -42,3 +42,11 @@ for first attempt u need to migrate the db using this commands :
 for first attempt u need to create user to access to filament using this command:
 `sa make:filament-user` if you have laravel-sail plugin or
 `./vendor/bin/sail artisan make:filament-user`
+
+## create packages
+
+you can create your package and clone it in the packages directory then you can install it using this commands :
+
+``` sc require yourname/your-package-name```
+if you dont have laravel-sail plugin you can use this command:
+```./vendor/bin/sail composer require yourname/your-package-name```
