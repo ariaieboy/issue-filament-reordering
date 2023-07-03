@@ -21,14 +21,28 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\SpatieMediaLibraryFileUpload::make('image')->multiple()->enableReordering(),
+                Forms\Components\Wizard::make([
+                    Forms\Components\Wizard\Step::make('info')->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('email')
+                            ->email()
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('password')->password(),
+                    ]),
+                    Forms\Components\Wizard\Step::make('images')->schema([
+                        Forms\Components\SpatieMediaLibraryFileUpload::make('image')
+                            ->collection('images')
+                            ->disk('minio')
+                            ->panelLayout('integrate')
+                            ->image()
+                            ->multiple()
+                            ->enableReordering()
+                            ->minFiles(1),
+                    ])
+                ])
             ]);
     }
 
